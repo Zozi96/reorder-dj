@@ -1,0 +1,34 @@
+{% extends 'base.html' %} {% load static %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" href="{% static 'movies/css/sort.css' %}">
+{% endblock %}
+
+{% block content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+        </tr>
+        </thead>
+        <tbody id="movies">
+        {% for i in object_list %}
+            <tr data-lookup="{{ i.lookup_id }}">
+                <th scope="row"><span class="handle">MUEVE</span></th>
+                <td>{{ i.name }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <form id="orderingForm" action="{% url 'save' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" id="orderingInput" name="ordering">
+    </form>
+    <button id="saveOrdering" class="btn btn-outline-primary btn-lg float-right mr-2">Guardar orden</button>
+
+{% endblock %}
+
+{% block extrajs %}
+    <script src="{% static 'movies/js/sort.js' %}"></script>
+{% endblock %}
